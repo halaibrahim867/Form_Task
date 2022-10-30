@@ -1,16 +1,18 @@
 <?php
-    session_start();
+session_start();
     include 'connection.php';
-    include 'function.php';
+    include 'functions.php';
    
     if($_SERVER['REQUEST_METHOD']=="POST")
     {
        //read from database
+       $email= $_POST['email'];
+       $password=$_POST['password'];
     
-        if( !empty($user_name ) && !empty($password) && !is_numeric($user_name))
+        if(!empty($email ) && !empty($password) )
         {
           
-            $query="select * from users where user_name = '$user_name'  limit 1";
+            $query="select * from users where email = '$email'  limit 1";
             
             $result=mysqli_query($con,$query);
             if($result)
@@ -21,7 +23,7 @@
                     if($user_data['password'] == $password)
                     {
                         $_SESSION['user_id'] = $user_data['user_id'];
-                        header("Location : index.php");
+                        header("Location:index.php");
                         die;
                     }
                 }                
@@ -41,7 +43,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
-    <style>
+    <style >
     body{
             background-image: url("background.jpeg");
             background-repeat: no-repeat;
@@ -91,13 +93,13 @@
     </style>    
 </head>
 <body>
-<div class="form ">
+    <div class="form ">
         <h1>LOGIN</h1>
-        <form action="" method="POST">
+        <form  method="POST">
             <input type="email" name="email" placeholder="Email"> <br><br>
             <input type="password" name="password" placeholder="Password"><br><br>
 
-            <button class="btn"  type="submit">Login</button>
+            <input   type="submit" value="Login" class="btn">
             <a class="btn" href="signup.php" >Signup</a>
 
         </form>

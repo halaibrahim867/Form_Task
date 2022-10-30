@@ -1,13 +1,17 @@
 <?php
-    session_start();
+session_start();
     include 'connection.php';
-    include 'function.php';
+    include 'functions.php';
    
     if($_SERVER['REQUEST_METHOD']=="POST")
     {
+        $first_name=$_POST['first_name'];
+        $last_name=$_POST['last_name'];
+        $email=$_POST['email'];
         $user_name=$_POST['user_name'];
         $password=$_POST['password'];
-        if( !empty($user_name ) && !empty($password) && !is_numeric($user_name))
+        if( !empty($user_name ) && !empty($password)&& !empty($email) && !empty($first_name) &&
+        !empty($last_name) )
         {
             $user_id =random_num(20);
             $query="insert into users 
@@ -15,7 +19,7 @@
             
             mysqli_query($con,$query);
 
-            header("Location : login.php");
+            header("Location:login.php");
             die;
         }else{
             echo "Please enter some valid information";
@@ -29,7 +33,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>sign_up page</title>
-    <style>
+    <style type="text/css">
         body{
             background-image: url("background.jpeg");
             background-repeat: no-repeat;
@@ -79,14 +83,14 @@
      
     <div class="form ">
         <h1>SIGN UP</h1>
-        <form action="" method="POST">
+        <form method="POST">
             <input type="text" name="first_name" id="" placeholder="First Name"> <br><br>
             <input type="text" name="last_name" id="" placeholder="Last Name"> <br><br>
             <input type="email" name="email" placeholder="Email"> <br><br>
             <input type="text" name="user_name" placeholder="UserName"> <br><br>
             <input type="password" name="password" placeholder="Password"><br><br>
 
-            <button class="btn"  type="submit">Submit</button>
+            <input class="btn" type="submit" value="Signup">
             <a class="btn" href="login.php">LogIn</a>
         </form>
     </div>
